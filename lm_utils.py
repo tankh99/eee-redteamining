@@ -26,7 +26,8 @@ np.random.seed(SD)  # Numpy
 torch.manual_seed(SD)  # PyTorch
 set_seed(SD)  # Hugging Face
 
-TARGET_NETWORK = 'gpt2-xl'  # 'gpt2'
+# TARGET_NETWORK = 'gpt2-xl'  # 'gpt2'
+TARGET_NETWORK = 'SweatyCrayfish/llama-3-8b-quantized'  # 'gpt2'
 CLASSIFIER_MODEL = 'facebook/muppet-roberta-large'
 MAX_LENGTH = 20
 DEVICE = 'cuda:0'
@@ -37,6 +38,7 @@ target_lm = pipeline('text-generation',
                      device=DEVICE,
                      torch_dtype=torch.float16,
                      pad_token_id=50256,
+                    load_in_4bit=True
                      )
 target_lm.tokenizer.pad_token = target_lm.tokenizer.eos_token
 sm = torch.nn.Softmax(dim=1)
